@@ -1,0 +1,486 @@
+/* css/styles.css */
+
+/* =========================================
+VARIABLES & RESET
+   ========================================= */
+:root {
+    /* Paleta Royal Enfield / Aventura */
+    --color-primary: #1a1a1a;       /* Negro Asfalto */
+    --color-secondary: #8b5e3c;     /* Cuero Marrón */
+    --color-accent: #d4af37;        /* Dorado Metálico */
+    --color-bg: #f4f4f4;            /* Gris Claro */
+    --color-white: #ffffff;
+    --color-text: #333333;
+    --color-text-light: #666666;
+    
+    /* Tipografía */
+    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: 'Georgia', serif; /* Toque clásico */
+    
+    /* Espaciado */
+    --sidebar-width: 260px;
+    --header-height: 70px;
+    --container-width: 1200px;
+    
+    /* Transiciones */
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-speed);
+}
+
+ul {
+    list-style: none;
+}
+
+/* =========================================
+   UTILIDADES & LAYOUT
+   ========================================= */
+.container {
+    width: 90%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.section {
+    padding: 5rem 0;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-accent);
+}
+
+.section-subtitle {
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+.grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--color-secondary);
+}
+
+.btn:hover {
+    background-color: transparent;
+    color: var(--color-secondary);
+    transform: translateY(-2px);
+}
+
+/* Animación Scroll */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* =========================================
+   SIDEBAR & NAVEGACIÓN
+   ========================================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    transition: transform var(--transition-speed) ease;
+}
+
+.sidebar__logo {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar__nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebar__link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.7;
+    display: block;
+    padding-left: 10px;
+    border-left: 3px solid transparent;
+}
+
+.sidebar__link:hover, 
+.sidebar__link--active {
+    opacity: 1;
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+    padding-left: 15px;
+}
+
+/* Mobile Header & Hamburger */
+.mobile-header {
+    display: none; /* Oculto en desktop */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    z-index: 999;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.hamburger {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-white);
+    transition: all var(--transition-speed);
+    transform-origin: left;
+}
+
+/* Animación Hamburguesa */
+.hamburger.active span:nth-child(1) { transform: rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg); }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed);
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Main Wrapper para empujar contenido en desktop */
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    transition: margin-left var(--transition-speed);
+}
+
+/* =========================================
+   COMPONENTES ESPECÍFICOS
+   ========================================= */
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white);
+}
+
+.hero__content h1 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero__content p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Tarjetas (Cards) */
+.card {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform var(--transition-speed);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card__icon {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+}
+
+.card__title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+/* Galería de Bienvenidos (Masonry Style) */
+.welcome-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    height: 300px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 1.5rem 1rem 0.5rem;
+    font-weight: bold;
+}
+
+/* Carrusel Clientes */
+.carousel {
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    padding: 2rem;
+    text-align: center;
+}
+
+.testimonial-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prev { left: 0; }
+.next { right: 0; }
+
+/* Formulario Contacto */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 2px rgba(139, 94, 60, 0.2);
+}
+
+.error-msg {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    display: none;
+}
+
+.form-input.invalid {
+    border-color: #d9534f;
+}
+
+.form-input.invalid + .error-msg {
+    display: block;
+}
+
+/* Mapa */
+.map-container {
+    width: 100%;
+    height: 400px;
+    background-color: #eee;
+    margin-top: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    text-align: center;
+    padding: 2rem;
+    margin-top: auto;
+}
+
+/* =========================================
+   RESPONSIVE (Mobile First Logic inverted for clarity)
+   ========================================= */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%); /* Ocultar sidebar */
+    }
+    
+    .sidebar.active {
+        transform: translateX(0); /* Mostrar sidebar */
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+        padding-top: var(--header-height); /* Espacio para header móvil */
+    }
+
+    .mobile-header {
+        display: flex;
+    }
+    
+    .hero__content h1 {
+        font-size: 2.5rem;
+    }
+}
